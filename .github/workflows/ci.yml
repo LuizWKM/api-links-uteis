@@ -32,29 +32,29 @@ jobs:
     - name: Executar testes
       run: mvn -B verify --file pom.xml
     
-    cd:
-      needs: ci
+  cd:
+    needs: ci
 
-      if: github.ref == 'refs/heads/main'
-      
-      runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    runs-on: ubuntu-latest
 
-      steps:
+    steps:
 
-      - name: Configurar Java 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
+    - name: Configurar Java 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
 
-      - name: Gerar JAR para deploy
-        run: mvn -B package --file pom.xml --DskipTests
+    - name: Gerar JAR para deploy
+      run: mvn -B package --file pom.xml --DskipTests
 
-      - name: Upload JAR para deploy
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-JAR
-          path: target/*.jar
+    - name: Upload JAR para deploy
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-JAR
+        path: target/*.jar
 
 
 
